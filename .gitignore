@@ -1,8 +1,9 @@
 kafka_2.13-3.1.0/
-02.kafka_topic_partition.md
-03.message_key.md
-04.consumer_offset.md
-05.consumer_groups.md
-06.multi_broker.md
-07.isr.md
-08.fault_tolerance.md
+04.04.kafka_install_multi_broker_kubernetes.md
+05.kafka_topic_partition.md
+06.message_key.md
+07.consumer_offset.md
+08.consumer_groups.md
+09.multi_broker.md
+10.isr.md
+11.fault_tolerance.md
