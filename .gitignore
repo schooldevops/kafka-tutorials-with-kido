@@ -7,3 +7,5 @@ kafka_2.13-3.1.0/
 09.multi_broker.md
 10.isr.md
 11.fault_tolerance.md
+
+./kafka-tutorials/target

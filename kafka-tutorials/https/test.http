@@ -1,0 +1,11 @@
+### SEND MESSAGE
+POST localhost:8080/api/produce
+Content-Type: application/json
+
+{
+  "title": "TestSend2",
+  "contents": "contents"
+}
+
+### SEND MESSAGE2
+POST localhost:8080/api/producer/send
