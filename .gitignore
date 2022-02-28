@@ -1,6 +1,5 @@
 kafka_2.13-3.1.0/
 04.kafka_install_multi_broker_kubernetes.md
-08.KafkaSpringBootSample_priority.md
 09.KafkaSpringBootSample_error_handle.md
 10.KafkaSpringBootSample_transaction.md
 11.kafka_topic_partition.md
@@ -14,3 +13,4 @@ kafka_2.13-3.1.0/
 ./kafka-tutorials-sample/targetgit 
 ./kafka-tutorials-sample_manual_consume/targetgit 
 ./kafka-tutorials-sample_with_key/targetgit 
+./kafka-tutorials-sample_with_priority/targetgit 
