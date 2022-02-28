@@ -1,0 +1,33 @@
+### SEND MESSAGE
+POST localhost:8080/api/produce
+Content-Type: application/json
+
+{
+  "title": "TestSend2",
+  "contents": "contents"
+}
+
+### SEND MESSAGE2
+POST localhost:8080/api/producer/send
+
+### Get Message by manually
+GET localhost:8080/api/consumer/consume?partition=0&offset=0
+
+### SEND with key
+POST localhost:8080/api/produce-with-key/key1
+Content-Type: application/json
+
+{
+  "title": "TestSendKey1",
+  "contents": "contents"
+}
+
+
+### SEND with key
+POST localhost:8080/api/produce-with-key/key2
+Content-Type: application/json
+
+{
+  "title": "TestSendKey2",
+  "contents": "contents"
+}
