@@ -1,6 +1,5 @@
 kafka_2.13-3.1.0/
 04.kafka_install_multi_broker_kubernetes.md
-09.KafkaSpringBootSample_error_handle.md
 11.kafka_topic_partition.md
 12.message_key.md
 13.consumer_offset.md
