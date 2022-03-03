@@ -1,0 +1,81 @@
+### SEND MESSAGE
+POST localhost:8080/api/produce
+Content-Type: application/json
+
+{
+  "title": "TestSend2",
+  "contents": "contents"
+}
+
+### SEND MESSAGE2
+POST localhost:8080/api/producer/send
+
+### Get Message by manually
+GET localhost:8080/api/consumer/consume?partition=0&offset=0
+
+### SEND with key
+POST localhost:8080/api/produce-with-key/key1
+Content-Type: application/json
+
+{
+  "title": "TestSendKey1",
+  "contents": "contents"
+}
+
+
+### SEND with key
+POST localhost:8080/api/produce-with-key/key2
+Content-Type: application/json
+
+{
+  "title": "TestSendKey2",
+  "contents": "contents"
+}
+
+### SEND with priority key
+POST localhost:8080/api/produce-with-priority/highPriority
+Content-Type: application/json
+
+{
+  "title": "HighPriority1",
+  "contents": "contents highPriority1"
+}
+
+### SEND with priority key
+POST localhost:8080/api/produce-with-priority/normalPriority
+Content-Type: application/json
+
+{
+  "title": "normalPriority1",
+  "contents": "contents normalPriority1"
+}
+
+### SEND with common error key
+POST localhost:8080/api/produce_error/default-error
+Content-Type: application/json
+
+{
+  "title": "normalPriority1",
+  "contents": "contents normalPriority1"
+}
+
+### SEND with error handle
+POST localhost:8080/api/produce_error/error-handler
+Content-Type: application/json
+
+{
+  "title": "normalPriority1",
+  "contents": "contents normalPriority1"
+}
+
+### SEND with retry handle
+POST localhost:8080/api/produce_error/retry-handler
+Content-Type: application/json
+
+{
+  "title": "normalPriority1",
+  "contents": "contents normalPriority1"
+}
+
+### TRANSACTION COMMIT
+POST

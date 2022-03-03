@@ -28,7 +28,6 @@ public class KafakConsumerConfig {
 
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-        props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
 
         JsonDeserializer<Object> jsonDeserializer = new JsonDeserializer<>();
         // Deserialize에 대해서 신뢰하는 패키지를 지정한다. "*"를 지정하면 모두 신뢰하게 된다.
