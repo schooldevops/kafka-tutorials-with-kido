@@ -1,12 +1,12 @@
 kafka_2.13-3.1.0/
 04.kafka_install_multi_broker_kubernetes.md
-11.kafka_topic_partition.md
-12.message_key.md
-13.consumer_offset.md
-14.consumer_groups.md
-15.multi_broker.md
-16.isr.md
-17.fault_tolerance.md
+110.kafka_topic_partition.md
+120.message_key.md
+130.consumer_offset.md
+140.consumer_groups.md
+150.multi_broker.md
+160.isr.md
+170.fault_tolerance.md
 
 ./kafka-tutorials-sample/targetgit 
 ./kafka-tutorials-sample_manual_consume/targetgit 
