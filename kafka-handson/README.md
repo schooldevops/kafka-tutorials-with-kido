@@ -9,7 +9,7 @@ docker-compose -f docker-compose-single.yaml up -d
 ## multi docker compose
 
 ```go
-docker-compose -f docker-compose.yaml up -d
+docker-compose -f docker-compose-multiple-zookeeper-kafka.yaml up -d
 ```
 
 ## kafka-ui 실행하기
