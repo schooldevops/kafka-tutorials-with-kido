@@ -78,4 +78,20 @@ Content-Type: application/json
 }
 
 ### TRANSACTION COMMIT
-POST
+POST localhost:8080/api/produce/transactional
+Content-Type: application/json
+
+[
+  {
+    "title": "TITLE: normalPriority1",
+    "contents": "contents normalPriority1"
+  },
+  {
+    "title": "TITLE: normalPriority2",
+    "contents": "contents normalPriority2"
+  },
+  {
+    "title": "TITLE: normalPriority3",
+    "contents": "contents normalPriority3"
+  }
+]

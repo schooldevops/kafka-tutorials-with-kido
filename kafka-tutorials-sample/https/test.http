@@ -1,5 +1,5 @@
 ### SEND MESSAGE
-POST localhost:8080/api/produce
+POST localhost:8089/api/produce
 Content-Type: application/json
 
 {
@@ -8,4 +8,4 @@ Content-Type: application/json
 }
 
 ### SEND MESSAGE2
-POST localhost:8080/api/producer/send
+POST localhost:8089/api/producer/send

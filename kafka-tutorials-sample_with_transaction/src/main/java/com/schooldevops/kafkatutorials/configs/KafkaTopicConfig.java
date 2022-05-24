@@ -37,49 +37,49 @@ public class KafkaTopicConfig {
 
     private NewTopic defaultTopic() {
         return TopicBuilder.name(DEFAULT_TOPIC)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicWithKey() {
         return TopicBuilder.name(TOPIC_WITH_KEY)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicWithPriority() {
         return TopicBuilder.name(TOPIC_WITH_PRIORITY)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicCommonError() {
         return TopicBuilder.name(TOPIC_COMMON_ERROR)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicErrorHandle() {
         return TopicBuilder.name(TOPIC_ERROR_HANDLER)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicRetryHandle() {
         return TopicBuilder.name(TOPIC_RETRY_HANDLER)
-                .partitions(2)
+                .partitions(1)
                 .replicas(1)
                 .build();
     }
 
     private NewTopic topicTransactional() {
         return TopicBuilder.name(TOPIC_TRANSACTION)
-                .partitions(3)  //
+                .partitions(1)  //
                 .replicas(1)
                 .build();
     }
