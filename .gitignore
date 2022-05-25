@@ -9,8 +9,8 @@ kafka_2.13-3.1.0/
 170.fault_tolerance.md
 
 ./kafka-tutorials-sample/target
-./kafka-tutorials-sample_manual_consume/targetgit 
-./kafka-tutorials-sample_with_key/targetgit 
-./kafka-tutorials-sample_with_priority/targetgit 
-./kafka-tutorials-sample_with_error_handling/targetgit 
-./kafka-tutorials-sample_with_transgit 
+./kafka-tutorials-sample_manual_consume/target
+./kafka-tutorials-sample_with_key/target
+./kafka-tutorials-sample_with_priority/target
+./kafka-tutorials-sample_with_error_handling/target
+./kafka-tutorials-sample_with_transaction/target
