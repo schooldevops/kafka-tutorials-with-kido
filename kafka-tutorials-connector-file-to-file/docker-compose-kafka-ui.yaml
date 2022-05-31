@@ -1,0 +1,14 @@
+version: '2'
+services:
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    ports:
+      - "8989:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092
+      # - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092,kafka-2:29093,kafka-3:29094
+      # - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181,zookeeper-2:32181,zookeeper-3:42181
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181

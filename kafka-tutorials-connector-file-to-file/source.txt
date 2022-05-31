@@ -1,0 +1,18 @@
+Hello this is example of connector.
+My name is Schooldevops
+Apple
+Watermelon
+Orange
+melon
+lemon
+
+-------
+Java
+Go
+Python
+
+Hello
+test
+
+kido
+switch
