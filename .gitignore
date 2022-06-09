@@ -14,3 +14,6 @@ kafka_2.13-3.1.0/
 ./kafka-tutorials-sample_with_priority/target
 ./kafka-tutorials-sample_with_error_handling/target
 ./kafka-tutorials-sample_with_transaction/target
+
+200_partition_count_estimate.md
+201_partition_count_estimate_02.md
