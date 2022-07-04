@@ -1,0 +1,19 @@
+{
+  "name": "sink-neo4j-orders-00",
+  "topics": "grainbatches, flourbatches, breadbatches, distributions, purchases",
+  "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+  "errors.retry.timeout": "-1",
+  "errors.retry.delay.max.ms": "1000",
+  "errors.tolerance": "all",
+  "errors.log.enable": true,
+  "errors.log.include.messages": true,
+  "neo4j.server.uri": "bolt://neo4j:7687",
+  "neo4j.authentication.basic.username": "neo4j",
+  "neo4j.authentication.basic.password": "connect",
+  "neo4j.encryption.enabled": false,
+  "neo4j.topic.cypher.user": "MERGE (a:Farmer {id:event.parent_farmer_id}) MERGE (b:Grainbatch {id:event.grainbatch_id}) MERGE (a)-[:PRODUCED  {timestamp:event.timestamp}]->(b)",
+  "neo4j.topic.cypher.flourbatches": "MERGE (a:Processor {id:event.parent_processor_id}) MERGE (b:Flourbatch {id:event.flourbatch_id}) MERGE (a)-[:PROCESSED {timestamp:event.timestamp}]->(b) MERGE (c:Grainbatch {id:event.parent_grainbatch_id}) MERGE (c)-[:PROCESSED_TO]->(b)",
+  "neo4j.topic.cypher.breadbatches": "MERGE (a:Bakery {id:event.parent_bakery_id}) MERGE (b:Breadbatch {id:event.breadbatch_id})  MERGE (a)-[:BAKED {timestamp:event.timestamp}]->(b) MERGE (c:Flourbatch {id:event.parent_flourbatch_id}) MERGE (c)-[:BAKED_TO]->(b)",
+  "neo4j.topic.cypher.distributions": "MERGE (a:Breadmachine {id:event.parent_vending_machine_id}) MERGE (b:Machinebatch {id:event.distribution_id}) MERGE (a)-[:HOLDS]->(b) MERGE (c:Breadbatch {id:event.parent_breadbatch_id}) MERGE (c)-[:DISTRIBUTED_TO]->(b) MERGE (d:Second {id:event.second}) MERGE (e:Minute {id:event.minute}) MERGE (e)-[:MINUTE_OF]->(d) MERGE (b)-[:DISTRIBUTED_AT]->(d)",
+  "neo4j.topic.cypher.purchases": "MERGE (a:Machinebatch {id:event.parent_distribution_id}) MERGE (b:Purchase {id:event.purchase_id}) SET b.goodrating = event.good_rating MERGE (a)-[:SELL_SOURCE]->(b) MERGE (c:Customer {id:event.child_customer_id}) MERGE (b)-[:BOUGHT_BY {timestamp:event.timestamp}]->(c)"
+}

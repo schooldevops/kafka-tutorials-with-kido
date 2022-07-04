@@ -1,0 +1,10 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:mysql://mysql:3306/traceability",
+    "topics": "grainbatches, flourbatches, breadbatches, distributions, purchases",
+    "connection.user": "root",
+    "connection.password": "debezium",
+    "auto.create": true,
+    "auto.evolve": true,
+    "insert.mode": "insert"
+}

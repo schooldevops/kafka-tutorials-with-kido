@@ -1,0 +1,15 @@
+### SEND MESSAGE
+POST localhost:8089/api/avro
+Content-Type: application/json
+
+{
+  "id": 1,
+  "firstName": "kid",
+  "lastName": "Ba---2"
+}
+
+### SEND MESSAGE2
+POST localhost:8089/api/producer/send
+
+
+curl -X POST 'http://localhost:8089/api/avro' -H 'Content-Type: application/json' -d '{"id": 1, "firstName": "schooldevops", "lastName":"KIDO"}'
