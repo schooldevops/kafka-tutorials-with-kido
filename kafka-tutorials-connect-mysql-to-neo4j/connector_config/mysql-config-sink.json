@@ -1,0 +1,13 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:mysql://mysql:3306/sink",
+    "topics.regex": "^jdbc-connector-.*",
+    "task.max": 1,
+    "connection.user": "sink_user",
+    "connection.password": "1234",
+    "auto.create": true,
+    "auto.evolve": true,
+    "insert.mode": "upsert",
+    "pk.mode":"record_value",
+    "pk.fields":"id"
+}

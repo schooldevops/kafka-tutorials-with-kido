@@ -1,0 +1,13 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "jdbc:mysql://mysql:3306/traceability",
+    "connection.user": "source_user",
+    "connection.password": "1234",
+    "topic.prefix": "jdbc-connector-",
+    "poll.interval.ms": 2000,
+    "table.whitelist": "user,group,group_user,role,user_role,group_role,policy,role_policy,user_policy,group_policy",
+    "mode": "incrementing",
+    "incrementing.column.name": "id",
+    "topic.creation.default.replication.factor": 1,
+    "topic.creation.default.partitions": 1
+}

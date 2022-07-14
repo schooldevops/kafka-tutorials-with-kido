@@ -1,6 +1,6 @@
 {
   "name": "sink-neo4j-orders-00",
-  "topics": "user",
+  "topics": "jdbc-connector-user,jdbc-connector-group,jdbc-connector-group_user,jdbc-connector-role,jdbc-connector-user_role,jdbc-connector-group_role,jdbc-connector-policy,jdbc-connector-role_policy,jdbc-connector-user_policy,jdbc-connector-group_policy",
   "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
   "errors.retry.timeout": "-1",
   "errors.retry.delay.max.ms": "1000",
@@ -11,5 +11,14 @@
   "neo4j.authentication.basic.username": "neo4j",
   "neo4j.authentication.basic.password": "connect",
   "neo4j.encryption.enabled": false,
-  "neo4j.topic.cypher.user": "MERGE (a:User {id:event.user_id}) MERGE (a)-[:FRIENDS_OF  {timestamp:event.timestamp}]->(a)"
+  "neo4j.topic.cypher.jdbc-connector-user": "MERGE (a:User {id:event.id, empno: event.empno, login: event.login, password: event.password, first_name: event.first_name, last_name: event.last_name, email: event.email, activated: event.activated, created_date: event.created_date })",
+  "neo4j.topic.cypher.jdbc-connector-group": "MERGE (a:Group {id:event.id, groupno: event.groupno, name: event.name, group_email: event.group_email, activated: event.activated, created_by: event.created_date, parent_group_id: event.parent_group_id}) MERGE (a)-[:SUBGROUP_OF {created_date: event.created_date}]->(b: Group{id:event.parent_group_id})",
+  "neo4j.topic.cypher.jdbc-connector-group_user": "MERGE (a:Group {id:event.group_id})<-[:BELONG_TO {created_date: event.created_date}]-(b :User{id:event.user_id})",
+  "neo4j.topic.cypher.jdbc-connector-role": "MERGE (a:Role {id:event.id, role_name:event.role_name, created_date:event.created_date})",
+  "neo4j.topic.cypher.jdbc-connector-user_role": "MERGE (a:User {id:event.user_id})-[:HAS_ROLE {created_date: event.created_date}]->(b :Role{id:event.role_id})",
+  "neo4j.topic.cypher.jdbc-connector-group_role": "MERGE (a:Group {id:event.group_id})-[:HAS_ROLE {created_date: event.created_date}]->(b :Role{id:event.role_id})",
+  "neo4j.topic.cypher.jdbc-connector-policy": "MERGE (a:Policy {id:event.id, name: event.name, target: event.target, permission: event.permission, created_date: event.created_date})",
+  "neo4j.topic.cypher.jdbc-connector-role_policy": "MERGE (a:Role {id:event.role_id})-[:HAS_PERMISSION {created_date: event.created_date}]->(b :Rolicy{id:event.policy_id})",
+  "neo4j.topic.cypher.jdbc-connector-user_policy": "MERGE (a:User {id:event.user_id})-[:HAS_PERMISSION {created_date: event.created_date}]->(b :Rolicy{id:event.policy_id})",
+  "neo4j.topic.cypher.jdbc-connector-group_policy": "MERGE (a:Group {id:event.group_id})-[:HAS_PERMISSION {created_date: event.created_date}]->(b :Rolicy{id:event.policy_id})"
 }

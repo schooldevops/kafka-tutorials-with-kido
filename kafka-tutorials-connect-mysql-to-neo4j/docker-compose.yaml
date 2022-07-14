@@ -24,7 +24,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:29092,EXTERNAL://localhost:9092
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_NUM_PARTITIONS: 3
 
 
@@ -42,7 +42,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:29093,EXTERNAL://localhost:9093
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_NUM_PARTITIONS: 3
     
 
@@ -60,7 +60,7 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:29094,EXTERNAL://localhost:9094
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 3
+      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
       KAFKA_NUM_PARTITIONS: 3
 
   schema-registry:
@@ -107,12 +107,15 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/confluent-hub-components
     volumes:
       - ./connector_config:/connector_config
+      - ./tools/db_connector:/usr/share/java/kafka-connect-jdbc
     command:
       - bash
       - -c
       - |
          echo "Installing Connectors"
          confluent-hub install --no-prompt neo4j/kafka-connect-neo4j:latest
+         confluent-hub install --no-prompt confluentinc/kafka-connect-jdbc:latest
+         cp /usr/share/java/kafka-connect-jdbc/mysql-connector-java-8.0.27.jar /usr/share/confluent-hub-components/confluentinc-kafka-connect-jdbc/lib/
          #
          echo "Launching Kafka Connect worker"
          /etc/confluent/docker/run &
@@ -129,7 +132,9 @@ services:
          done
          echo -e "\n--\n+> Creating Data Generator source"
          cd /connector_config
-         curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-neo4j-orders-00/config -d@neo4j-config.json
+         curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/source-mysql-user-00/config -d@mysql-config-source.json
+         curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-mysql-user-00/config -d@mysql-config-sink.json
+         #  curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-neo4j-user-00/config -d@neo4j-config.json
          #
          sleep infinity      
 
@@ -148,22 +153,75 @@ services:
     volumes:
       - ./neo4j-init-files:/var/lib/neo4j/conf             
 
+  mysql:
+    # *-----------------------------*
+    # To connect to the DB:
+    #   docker exec -it mysql bash -c 'mysql -u root -p$MYSQL_ROOT_PASSWORD demo'
+    # *-----------------------------*
+    platform: linux/x86_64
+    image: mysql/mysql-server:8.0.23
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=1234
+    volumes:
+      - ./mysql-init-files:/docker-entrypoint-initdb.d
+
+
 # Initial Kafka
 # - Create Topic to use 'kafka connector'
   init-kafka:
     image: confluentinc/cp-kafka:latest
     depends_on:
-      - kafka
+      - schema-registry
+      - kafka-1
+      - kafka-2
+      - kafka-3
     entrypoint: [ '/bin/sh', '-c' ]
     command: |
       "
       # blocks until kafka is reachable
-      kafka-topics --bootstrap-server kafka-1:29092 --list 
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --list 
       echo -e 'Deleting kafka topics'
-      kafka-topics --bootstrap-server kafka-1:29092 --delete --topic user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-group
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-group_user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-user_role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-group_role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-role_policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-user_policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --delete --topic jdbc-connector-group_policy
       echo -e 'Creating kafka topics'
-      kafka-topics --bootstrap-server kafka-1:29092 --create --topic user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-group
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-group_user
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-user_role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-group_role
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-role_policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-user_policy
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --create --topic jdbc-connector-group_policy
       echo -e 'Successfully created the following topics:'
-      kafka-topics --bootstrap-server kafka-1:29092 --list
+      kafka-topics --bootstrap-server kafka-1:29092,kafka-2:29093,kafka-3:29094 --list
       sleep infinity
       "
+  kafka-ui:
+    image: provectuslabs/kafka-ui
+    container_name: kafka-ui
+    depends_on:
+      - init-kafka
+    ports:
+      - "8989:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      # - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:29092,kafka-2:29093,kafka-3:29094
+      # - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181,zookeeper-2:32181,zookeeper-3:42181
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=zookeeper-1:22181      
