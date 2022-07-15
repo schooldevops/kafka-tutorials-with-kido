@@ -34,3 +34,10 @@ docker-compose -f docker-compose.yaml down
 ```go
 {"name":"sink-mysql-user-00","connector":{"state":"RUNNING","worker_id":"kafka-connect:8083"},"tasks":[{"id":0,"state":"RUNNING","worker_id":"kafka-connect:8083"}],"type":"sink"}
 ```
+
+## 관련자료 
+
+- https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/
+- https://github.com/schooldevops/AWS_Tutorials_by_kido/blob/main/ElastiCache/redis_cluster.md
+- https://github.com/lettuce-io/lettuce-core/wiki/ReadFrom-Settings
+- https://github.com/lettuce-io/lettuce-core/wiki/Redis-Cluster
