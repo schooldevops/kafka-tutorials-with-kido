@@ -133,8 +133,8 @@ services:
         echo -e "\n--\n+> Creating Data Generator source"
         cd /connector_config
         curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/source-mysql-user-00/config -d@mysql-config-source.json
-        curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-mysql-user-00/config -d@mysql-config-sink.json
         # curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-neo4j-user-00/config -d@neo4j-config.json
+        curl -i -X PUT -H Content-Type:application/json http://localhost:8083/connectors/sink-mysql-user-00/config -d@mysql-config-sink.json
         #
         sleep infinity      
 
