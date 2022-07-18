@@ -41,3 +41,4 @@ docker-compose -f docker-compose.yaml down
 - https://github.com/schooldevops/AWS_Tutorials_by_kido/blob/main/ElastiCache/redis_cluster.md
 - https://github.com/lettuce-io/lettuce-core/wiki/ReadFrom-Settings
 - https://github.com/lettuce-io/lettuce-core/wiki/Redis-Cluster
+- https://docs.confluent.io/2.0.0/connect/connect-jdbc/docs/index.html#incremental-query-modes
