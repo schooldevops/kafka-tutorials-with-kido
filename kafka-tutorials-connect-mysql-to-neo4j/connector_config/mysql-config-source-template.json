@@ -1,0 +1,13 @@
+{
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "connection.url": "{connectionUrl}",
+    "connection.user": "{username}",
+    "connection.password": "{password}",
+    "topic.prefix": "{prefix}}",
+    "poll.interval.ms": "{interval}",
+    "table.whitelist": "{tableList}",
+    "mode": "{mode}",
+    "incrementing.column.name": "{columnName}",
+    "topic.creation.default.replication.factor": "{replicationFactor}",
+    "topic.creation.default.partitions": "{partition}"
+}
