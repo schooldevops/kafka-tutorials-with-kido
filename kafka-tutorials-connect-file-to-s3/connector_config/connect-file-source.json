@@ -1,0 +1,6 @@
+{
+  "connector.class": "FileStreamSource",
+  "tasks.max": 1,
+  "file": "/sample_data/source.txt",
+  "topic": "s3-sink-connector"
+}
