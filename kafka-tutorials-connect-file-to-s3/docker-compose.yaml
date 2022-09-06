@@ -91,8 +91,8 @@ services:
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_PLUGIN_PATH: /usr/share
-      AWS_ACCESS_KEY_ID: "A___________________O"
-      AWS_SECRET_ACCESS_KEY: "4___________________________________________0"
+      AWS_ACCESS_KEY_ID: "A________________________________O"
+      AWS_SECRET_ACCESS_KEY: "4_______________________________0"
     volumes:
       - ./sample_data:/sample_data
       - ./connector_config:/connector_config
